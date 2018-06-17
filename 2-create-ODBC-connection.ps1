@@ -102,24 +102,24 @@ Function CreateODBCDataSources
   if ($Environment -eq "int")
   {
 
-        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName -connectionDriver $driver -L >> $Logfile
+        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName -connectionDriver $driver -L  $Logfile
 
-        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver   -L >> $Logfile
+        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver   -L  $Logfile
 
   }
   elseif ($Environment -eq "uat")
   {
 
-        CreateODBCDataSourcesConfig -DSNName $uatODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L >> $Logfile
-        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver  -L >> $Logfile
+        CreateODBCDataSourcesConfig -DSNName $uatODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L  $Logfile
+        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver  -L  $Logfile
 
   }
 
   elseif ($Environment -eq "prod")
   {
 
-        CreateODBCDataSourcesConfig -DSNName $prodODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L >> $Logfile
-        CreateODBCDataSourcesConfig -DSNName $prodODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L >> $Logfile
+        CreateODBCDataSourcesConfig -DSNName $prodODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L $Logfile
+        CreateODBCDataSourcesConfig -DSNName $prodODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L  $Logfile
 
       }
 
