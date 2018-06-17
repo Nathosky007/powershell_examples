@@ -5,20 +5,16 @@
  License: MIT License
 #>
 
-$intLndODBCDataSourceList=@("DevReports","LndDbMain")
-$intPsvODBCDataSourceList="DevReportsPsv"
+$intODBCDataSourceList=@("int1","int2")
+$prodODBCDataSourceList=@("prod1","prod2")
+$uatODBCDataSourceList=@("uat1","uat2")
 
-$prodLndODBCDataSourceList=@("ProdReports","TestReports","LndDbMain")
-$prodPsvODBCDataSourceList=@("ProdReportsPsv","TestReportsPsv")
-
-$uatLndODBCDataSourceList=@("TestReports","LndDbMain")
-$uatPsvODBCDataSourceList="TestReportsPsv"
-
-$lndDBName="database1"
-$psvDBName="database2"
+$DBName="database1"
 
 $driver="SQL Server"
 $DBUserName="reports"
+
+$Logfile="<log file location>"
 
 Function CreateODBCDataSourcesConfig
 {
@@ -60,11 +56,11 @@ Function CreateODBCDataSourcesConfig
         "HKLM:\SOFTWARE\ODBC\ODBC.INI\ODBC Data Sources",
         "HKLM:\SOFTWARE\ODBC\ODBCINST.INI\$($connectionDriver)"))
 
-        LogInfo "Creating ODBC connection for: $($DSNName) " $Logfile
-        LogInfo "Database name : $($DBName)" $Logfile
-        LogInfo "Database Server name : $($ServerName)" $Logfile
-        LogInfo "Database User name : $($DBUserName)" $Logfile
-        LogInfo "Connection Driver : $($connectionDriver) " $Logfile
+        echo "Creating ODBC connection for: $($DSNName) " >> $Logfile
+        echo "Database name : $($DBName)" >> $Logfile
+        echo "Database Server name : $($ServerName)" >> $Logfile
+        echo "Database User name : $($DBUserName)" >> $Logfile
+        echo "Connection Driver : $($connectionDriver) " >> $Logfile
 
     foreach ($regPath in $ODBCPaths)
     {
@@ -106,39 +102,28 @@ Function CreateODBCDataSources
   if ($Environment -eq "int")
   {
 
-        CreateODBCDataSourcesConfig -DSNName $intLndODBCDataSourceList[0] -DBName $lndDBName -ServerName $LNDDBDNSName -DBUserName $DBUserName -connectionDriver $driver -L $Logfile
+        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName -connectionDriver $driver -L >> $Logfile
 
-        CreateODBCDataSourcesConfig -DSNName $intLndODBCDataSourceList[1] -DBName $lndDBName -ServerName $LNDDBDNSName -DBUserName $DBUserName  -connectionDriver $driver   -L $Logfile
-
-        CreateODBCDataSourcesConfig -DSNName $intPsvODBCDataSourceList -DBName $psvDBName -ServerName $PSVDBDNSName -DBUserName $DBUserName -connectionDriver $driver -L $Logfile
-
+        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver   -L >> $Logfile
 
   }
   elseif ($Environment -eq "uat")
   {
 
-        CreateODBCDataSourcesConfig -DSNName $uatLndODBCDataSourceList[0] -DBName $lndDBName -ServerName $LNDDBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L $Logfile
-        CreateODBCDataSourcesConfig -DSNName $intLndODBCDataSourceList[1] -DBName $lndDBName -ServerName $LNDDBDNSName -DBUserName $DBUserName  -connectionDriver $driver  -L $Logfile
-
-        CreateODBCDataSourcesConfig -DSNName $uatPsvODBCDataSourceList -DBName $psvDBName -ServerName $PSVDBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L $Logfile
-
+        CreateODBCDataSourcesConfig -DSNName $uatODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L >> $Logfile
+        CreateODBCDataSourcesConfig -DSNName $intODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver  -L >> $Logfile
 
   }
 
   elseif ($Environment -eq "prod")
   {
 
-        CreateODBCDataSourcesConfig -DSNName $prodLndODBCDataSourceList[0] -DBName $lndDBName -ServerName $LNDDBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L $Logfile
-        CreateODBCDataSourcesConfig -DSNName $prodLndODBCDataSourceList[1] -DBName $lndDBName -ServerName $LNDDBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L $Logfile
-        CreateODBCDataSourcesConfig -DSNName $prodLndODBCDataSourceList[2] -DBName $lndDBName -ServerName $LNDDBDNSName -DBUserName $DBUserName  -connectionDriver $driver  -L $Logfile
-
-
-        CreateODBCDataSourcesConfig -DSNName $prodPsvODBCDataSourceList[0] -DBName $psvDBName -ServerName $PSVDBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L $Logfile
-        CreateODBCDataSourcesConfig -DSNName $prodPsvODBCDataSourceList[1] -DBName $psvDBName -ServerName $PSVDBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L $Logfile
+        CreateODBCDataSourcesConfig -DSNName $prodODBCDataSourceList[0] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L >> $Logfile
+        CreateODBCDataSourcesConfig -DSNName $prodODBCDataSourceList[1] -DBName $DBName -ServerName $DBDNSName -DBUserName $DBUserName  -connectionDriver $driver -L >> $Logfile
 
       }
 
   else {
-    LogInfo -Logstring "Not a valid environment" -Logfile $Logfile
+    echo -Logstring "Not a valid environment"  >> $Logfile
   }
  }
