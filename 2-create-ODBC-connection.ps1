@@ -124,6 +124,6 @@ Function CreateODBCDataSources
       }
 
   else {
-    echo -Logstring "Not a valid environment"  >> $Logfile
+    echo  "Not a valid environment"  >> $Logfile
   }
  }
